@@ -1,2 +1,2 @@
-# Familien-Ern-hrungsmanager
+# Familien-Ernährungsmanager
 Mein Familien-Ernährungsmanager
