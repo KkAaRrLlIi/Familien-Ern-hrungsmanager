@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#183f2d">
+<meta name="description" content="Familien-Ernährungsmanager für Speisepläne, Einkauf und Budget.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Familien-Ernährungsmanager</title>
+<style>
+:root{--bg:#f4f6f3;--panel:#fff;--ink:#1f2a24;--muted:#68756d;--line:#e0e7e0;--green:#246b4a;--soft:#e8f3eb;--amber:#fff3d8;--shadow:0 8px 28px rgba(30,50,38,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#183f2d;color:#fff;padding:22px max(18px,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-weight:750;font-size:20px;letter-spacing:-.3px}.brand small{display:block;font-weight:450;color:#d3e6d8;font-size:12px;letter-spacing:0}
+.pill{font-size:12px;padding:6px 10px;border-radius:99px;background:#2c5b43;color:#e4f3e9}
+.shell{max-width:1180px;margin:auto;padding:22px 18px 50px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px}
+nav{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:10px;height:max-content;box-shadow:var(--shadow);position:sticky;top:12px}
+nav button{width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:11px;color:#536057;font-weight:600;cursor:pointer;margin:2px 0}
+nav button.active,nav button:hover{background:var(--soft);color:var(--green)}
+main{min-width:0}.heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:2px 0 18px}.heading h1{font-size:27px;letter-spacing:-.7px;margin:0}.heading p{margin:5px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:var(--shadow);min-width:0}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-12{grid-column:span 12}
+.kicker{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:750}.big{font-size:29px;font-weight:780;letter-spacing:-1px;margin:5px 0}.sub{color:var(--muted);font-size:13px}.progress{height:8px;background:#edf1ed;border-radius:99px;overflow:hidden;margin:12px 0 7px}.progress span{display:block;height:100%;background:var(--green);border-radius:99px}
+h2{font-size:17px;margin:0 0 13px}h3{font-size:15px;margin:0 0 4px}.meal{display:grid;grid-template-columns:75px minmax(0,1fr) auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:center}.meal:last-child{border-bottom:0;padding-bottom:0}.time{font-size:12px;color:var(--muted);font-weight:700}.meal p{margin:2px 0 0;font-size:13px;color:var(--muted)}.tag{font-size:11px;padding:5px 8px;border-radius:99px;background:var(--soft);color:var(--green);white-space:nowrap;font-weight:700}
+.list{display:grid;gap:10px}.check{display:flex;align-items:center;gap:10px}.check input{accent-color:var(--green);width:17px;height:17px}.check.done span{text-decoration:line-through;color:#8a958d}
+button.primary,button.secondary{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:var(--soft);color:var(--green)}input,textarea,select{font:inherit;border:1px solid var(--line);border-radius:10px;padding:11px;background:white;color:var(--ink);width:100%}
+textarea{min-height:82px;resize:vertical}.chatlog{display:grid;gap:10px;margin:12px 0}.bubble{padding:12px;border-radius:12px;background:#f0f4f0;font-size:14px}.bubble.ai{background:var(--soft)}.notice{background:var(--amber);border-radius:12px;padding:12px;font-size:13px;color:#72531a}.row{display:flex;gap:9px;align-items:center}.row>*{min-width:0}.footer{font-size:12px;color:var(--muted);margin-top:18px}
+.hidden{display:none!important}
+@media(max-width:760px){.shell{grid-template-columns:1fr;padding:14px 12px 36px;gap:13px}nav{position:static;display:flex;overflow:auto;gap:4px;padding:7px}nav button{white-space:nowrap;width:auto;margin:0;padding:10px}.span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}.heading h1{font-size:23px}.heading{align-items:start;flex-direction:column}.meal{grid-template-columns:57px minmax(0,1fr)}.meal .tag{grid-column:2;width:max-content}header{padding:17px 15px}}
+</style>
+</head>
+<body>
+<header><div class="brand">🥗 Familien-Ernährungsmanager<small>Gemeinsam planen. Bewusst einkaufen. Im Budget bleiben.</small></div><div class="pill">FAMILIEN-APP · OFFLINE-BASIS</div></header>
+<div class="shell">
+<nav aria-label="Hauptnavigation">
+<button class="active" data-view="dashboard">⌂ Überblick</button>
+<button data-view="plan">▦ Speiseplan</button>
+<button data-view="shopping">✓ Einkaufsliste</button>
+<button data-view="budget">€ Budget</button>
+<button data-view="assistant">✦ KI-Assistent</button>
+</nav>
+<main>
+<section id="dashboard" class="view">
+<div class="heading"><div><h1>Guten Abend!</h1><p>Dein Familienüberblick für heute · Beispielinhalte zum Testen</p></div><button class="primary" onclick="showView('plan')">Wochenplan ansehen</button></div>
+<div class="grid">
+<div class="card span-4"><div class="kicker">Monatsbudget</div><div class="big" id="budgetRemaining">320,00 €</div><div class="sub">für Lebensmittel & Getränke nach Schulessen</div><div class="progress"><span style="width:28%"></span></div><div class="sub">Beispiel: 90 € von 320 € verplant</div></div>
+<div class="card span-4"><div class="kicker">Familienessen</div><div class="big">1 gemeinsames</div><div class="sub">warmes Abendessen geplant</div></div>
+<div class="card span-4"><div class="kicker">Einkauf</div><div class="big"><span id="checkedCount">0</span> / 8</div><div class="sub">Artikel abgehakt</div></div>
+<div class="card span-7"><h2>Heute auf dem Plan</h2>
+<div class="meal"><div class="time">Frühstück</div><div><h3>Haferflockensuppe mit Beeren</h3><p>Erwachsener 1 · optional Obst dazu</p></div><span class="tag">Einfach</span></div>
+<div class="meal"><div class="time">Mittag</div><div><h3>Schulessen für das Kind</h3><p>In den 80 € monatlich enthalten; Menü unbekannt</p></div><span class="tag">Schule</span></div>
+<div class="meal"><div class="time">Abend</div><div><h3>Selbst gemachte Hamburger</h3><p>Rindfleisch, Salat, Tomate und Ofenkartoffeln</p></div><span class="tag">Familie</span></div>
+<div class="meal"><div class="time">Snack</div><div><h3>Obst und Wasser</h3><p>Snacks bei Bedarf separat einplanen</p></div><span class="tag">Flexibel</span></div>
+</div>
+<div class="card span-5"><h2>Familienprofile</h2><div class="list">
+<div><h3>Erwachsener 1</h3><div class="sub">Individuelle Ziele und Bewegung</div></div>
+<div><h3>Erwachsener 2</h3><div class="sub">Individuelle Ernährungsbedürfnisse beachten</div></div>
+<div><h3>Kind</h3><div class="sub">Schul-Frühstücksdose, Schulessen und Vesper</div></div>
+</div><div class="notice" style="margin-top:15px">Gesundheitshinweis: Bei Erkrankungen oder Medikamenten besondere Ernährungspläne mit medizinischem Fachpersonal abstimmen.</div></div>
+<div class="card span-12"><h2>Deine Planungsgrundsätze</h2><div class="sub">Schweinefleisch möglichst vermeiden · Wasser als Standard · Beeren, Obst, Gemüse und Haferflocken gern einplanen · Pizza, Hamburger, Chips und Kuchen in passender Häufigkeit zulassen.</div></div>
+</div>
+</section>
+<section id="plan" class="view hidden">
+<div class="heading"><div><h1>Wochen-Speiseplan</h1><p>Beispielwoche – vor einer echten Planung noch an Vorräte und Tagesablauf anpassen.</p></div><button class="secondary" onclick="showView('assistant')">Plan mit KI entwerfen</button></div>
+<div class="grid">
+<div class="card span-6"><h2>Montag</h2><div class="meal"><div class="time">Morgens</div><div><h3>Haferflocken mit Beeren</h3><p>Für Erwachsene; Davis' Dose nach Schulbedarf packen.</p></div></div><div class="meal"><div class="time">Abends</div><div><h3>Hähnchen mit Kartoffeln & Gemüse</h3><p>Ein gemeinsames Gericht, Portionen individuell anpassen.</p></div></div></div>
+<div class="card span-6"><h2>Dienstag</h2><div class="meal"><div class="time">Morgens</div><div><h3>Vollkornbrot mit Käse</h3><p>Obst ergänzen.</p></div></div><div class="meal"><div class="time">Abends</div><div><h3>Linsen-Bolognese mit Vollkornnudeln</h3><p>Preiswert, ballaststoffreich und ohne Fleisch.</p></div></div></div>
+<div class="card span-6"><h2>Mittwoch</h2><div class="meal"><div class="time">Abends</div><div><h3>Rindfleisch-Gemüse-Pfanne mit Reis</h3><p>Portionsgrößen individuell anpassen.</p></div></div></div>
+<div class="card span-6"><h2>Donnerstag</h2><div class="meal"><div class="time">Abends</div><div><h3>Ofenkartoffeln mit Kräuterquark</h3><p>Günstig, mit Rohkost und optional Ei.</p></div></div></div>
+<div class="card span-6"><h2>Freitag</h2><div class="meal"><div class="time">Abends</div><div><h3>Selbst gemachte Pizza</h3><p>Gemüse und schweinefleischfreie Beläge.</p></div></div></div>
+<div class="card span-6"><h2>Wochenende</h2><div class="meal"><div class="time">Mittag</div><div><h3>Familiengericht nach Wunsch</h3><p>Zum Beispiel Burger oder ein Rind-/Geflügelgericht; Reste einplanen.</p></div></div></div>
+</div>
+</section>
+<section id="shopping" class="view hidden">
+<div class="heading"><div><h1>Einkaufsliste</h1><p>Demo-Liste. Hake ab, was du bereits gekauft hast.</p></div><button class="secondary" onclick="resetChecks()">Zurücksetzen</button></div>
+<div class="grid"><div class="card span-7"><h2>Lebensmittel</h2><div class="list" id="shoppingList">
+<label class="check"><input type="checkbox"><span>Haferflocken</span></label>
+<label class="check"><input type="checkbox"><span>Tiefkühlbeeren</span></label>
+<label class="check"><input type="checkbox"><span>Äpfel und Bananen</span></label>
+<label class="check"><input type="checkbox"><span>Hähnchenbrust</span></label>
+<label class="check"><input type="checkbox"><span>Rinderhackfleisch</span></label>
+<label class="check"><input type="checkbox"><span>Kartoffeln</span></label>
+<label class="check"><input type="checkbox"><span>Salat, Tomaten und Gurke</span></label>
+<label class="check"><input type="checkbox"><span>Vollkornbrot</span></label>
+</div><div class="row" style="margin-top:16px"><input id="newItem" placeholder="Artikel hinzufügen"><button class="primary" onclick="addItem()">Hinzufügen</button></div></div>
+<div class="card span-5"><h2>Einkaufsnotiz</h2><p class="sub">Schulessen für das Kind ist separat im Monatsbudget berücksichtigt. Preise und Mengen dieser Demo sind noch nicht berechnet.</p><label for="shopNotes" class="sub">Notizen</label><textarea id="shopNotes" placeholder="Vorräte, Mengen oder Preise notieren …"></textarea><p class="footer">Eingaben werden lokal in diesem Browser gespeichert, nicht in einer Cloud. Nutze „Daten sichern“, um eine JSON-Sicherung herunterzuladen.</p><div class="row"><button class="secondary" onclick="exportData()">Daten sichern</button><button class="secondary" onclick="clearData()">Lokale Daten löschen</button></div></div></div>
+</section>
+<section id="budget" class="view hidden">
+<div class="heading"><div><h1>Budget</h1><p>Monatsrahmen der Familie</p></div></div>
+<div class="grid">
+<div class="card span-4"><div class="kicker">Gesamtbudget</div><div class="big">400 €</div><div class="sub">Lebensmittel, Getränke, Kaffee, Snacks und Schulessen</div></div>
+<div class="card span-4"><div class="kicker">Schulessen Davis</div><div class="big">80 €</div><div class="sub">Monatlich angegeben</div></div>
+<div class="card span-4"><div class="kicker">Übriger Einkauf</div><div class="big">320 €</div><div class="sub">Im Mittel ca. 74 € pro Woche</div></div>
+<div class="card span-12"><h2>Ausgaben erfassen</h2><div class="row"><input id="expenseName" placeholder="z. B. Wocheneinkauf"><input id="expenseAmount" type="number" min="0" step=".01" placeholder="Betrag €"><button class="primary" onclick="addExpense()">Eintragen</button></div><div id="expenseList" class="list" style="margin-top:15px"></div><p class="sub" id="expenseSummary">Noch keine tatsächlichen Ausgaben erfasst.</p></div>
+</div>
+</section>
+<section id="assistant" class="view hidden">
+<div class="heading"><div><h1>KI-Ernährungsassistent</h1><p>Formuliere einen Wunsch für deine Planung.</p></div></div>
+<div class="grid">
+<div class="card span-7"><h2>Was möchtest du planen?</h2><div class="chatlog" id="chatlog"><div class="bubble ai"><b>Ernährungscoach (Demo)</b><br>Ich kann deine Wünsche sammeln. Eine echte KI-Anbindung ist in dieser Version noch nicht aktiviert.</div></div><textarea id="prompt" placeholder="z. B. Plane fünf günstige Abendessen, einmal Pizza, ohne Schweinefleisch. Nutze vorhandene Kartoffeln und Gemüse."></textarea><div class="row" style="margin-top:10px"><button class="primary" onclick="sendPrompt()">Wunsch hinzufügen</button><button class="secondary" onclick="document.getElementById('prompt').value='Plane eine günstige Woche mit Haferflockensuppe, Burgern und selbst gemachter Pizza. Berücksichtige unterschiedliche Portionsgrößen und das 400-€-Budget.'">Beispiel einsetzen</button></div></div>
+<div class="card span-5"><h2>KI-Sicherheitsregeln</h2><div class="list"><div class="sub">• Budget und Annahmen transparent machen.</div><div class="sub">• Keine erfundenen Vorräte oder Ausgaben.</div><div class="sub">• Keine Insulin- oder Medikamentendosierungen empfehlen oder ändern.</div><div class="sub">• Nährwerte als Schätzung kennzeichnen, solange keine verlässlichen Produktdaten vorliegen.</div><div class="sub">• Vor dem Speichern eines KI-Plans erst prüfen und bestätigen lassen.</div></div></div>
+</div>
+</section>
+<div class="footer">Version 0.3 · Daten werden lokal in diesem Browser gespeichert. Keine Anmeldung, Cloud-Synchronisation oder echte KI-Verbindung. Die Daten bleiben auf diesem Gerät und in diesem Browser. Für sensible Gesundheitsdaten noch nicht als sichere Produktiv-App geeignet. Exportiere regelmäßig eine Sicherung.</div>
+</main>
+</div>
+<script>
+const STORAGE_KEY='familienErnaehrungsmanager_v02';
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('hidden',v.id!==id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+function getState(){return {items:[...document.querySelectorAll('#shoppingList .check')].map(l=>({text:l.querySelector('span').textContent,checked:l.querySelector('input').checked})),notes:document.getElementById('shopNotes').value,expenses,chat:[...document.querySelectorAll('#chatlog .bubble')].map(b=>({className:b.className,text:b.innerText}))}}
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(getState()));}catch(e){console.warn('Lokales Speichern nicht möglich',e)}}
+function updateChecks(){let boxes=[...document.querySelectorAll('#shoppingList input[type=checkbox]')];document.getElementById('checkedCount').textContent=boxes.filter(b=>b.checked).length;boxes.forEach(b=>b.closest('label').classList.toggle('done',b.checked));saveState()}
+document.getElementById('shoppingList').addEventListener('change',updateChecks);
+function addItem(){let input=document.getElementById('newItem'),v=input.value.trim();if(!v)return;let label=document.createElement('label');label.className='check';let cb=document.createElement('input');cb.type='checkbox';let span=document.createElement('span');span.textContent=v;label.append(cb,span);document.getElementById('shoppingList').append(label);input.value='';updateChecks()}
+function resetChecks(){document.querySelectorAll('#shoppingList input').forEach(b=>b.checked=false);updateChecks()}
+let expenses=[];
+function renderExpenses(){let list=document.getElementById('expenseList');list.innerHTML='';expenses.forEach(e=>{let d=document.createElement('div');d.className='row';let s=document.createElement('span');s.textContent=e.n;s.style.flex='1';let b=document.createElement('b');b.textContent=e.a.toLocaleString('de-DE',{style:'currency',currency:'EUR'});d.append(s,b);list.append(d)});let sum=expenses.reduce((t,e)=>t+e.a,0);document.getElementById('expenseSummary').textContent=expenses.length?'Erfasst: '+sum.toLocaleString('de-DE',{style:'currency',currency:'EUR'})+' · Verbleibend vom 320-€-Einkaufsbudget: '+Math.max(0,320-sum).toLocaleString('de-DE',{style:'currency',currency:'EUR'}):'Noch keine tatsächlichen Ausgaben erfasst.'}
+function addExpense(){let n=document.getElementById('expenseName').value.trim(),a=Number(document.getElementById('expenseAmount').value);if(!n||!Number.isFinite(a)||a<=0)return;expenses.push({n,a});renderExpenses();document.getElementById('expenseName').value='';document.getElementById('expenseAmount').value='';saveState()}
+function sendPrompt(){let t=document.getElementById('prompt'),v=t.value.trim();if(!v)return;let d=document.createElement('div');d.className='bubble';let strong=document.createElement('b');strong.textContent='Dein Planungswunsch';let p=document.createElement('div');p.textContent=v;d.append(strong,p);document.getElementById('chatlog').append(d);let reply=document.createElement('div');reply.className='bubble ai';reply.textContent='Wunsch aufgenommen. In diesem Prototyp wird noch keine KI-Anfrage gesendet; der Wunsch bleibt lokal in diesem Browser gespeichert.';document.getElementById('chatlog').append(reply);t.value='';saveState()}
+document.getElementById('shopNotes').addEventListener('input',saveState);
+function loadState(){try{let raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;let s=JSON.parse(raw);if(Array.isArray(s.items)){let list=document.getElementById('shoppingList');list.innerHTML='';s.items.forEach(item=>{let label=document.createElement('label');label.className='check';let cb=document.createElement('input');cb.type='checkbox';cb.checked=!!item.checked;let span=document.createElement('span');span.textContent=item.text;label.append(cb,span);list.append(label)})}document.getElementById('shopNotes').value=s.notes||'';expenses=Array.isArray(s.expenses)?s.expenses:[];renderExpenses();if(Array.isArray(s.chat)){let log=document.getElementById('chatlog');log.innerHTML='';s.chat.forEach(item=>{let d=document.createElement('div');d.className=item.className==='bubble ai'?'bubble ai':'bubble';d.textContent=item.text;log.append(d)})}}catch(e){console.warn('Gespeicherte Daten konnten nicht geladen werden',e)}updateChecks()}
+function exportData(){saveState();let data=localStorage.getItem(STORAGE_KEY)||'{}';let blob=new Blob([data],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='familien-ernaehrungsmanager-sicherung.json';a.click();URL.revokeObjectURL(url)}
+function clearData(){if(!confirm('Alle lokal gespeicherten Einkaufslisten, Notizen, Ausgaben und Assistenten-Wünsche löschen?'))return;localStorage.removeItem(STORAGE_KEY);location.reload()}
+loadState();
+</script>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
