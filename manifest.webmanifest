@@ -1,7 +1,7 @@
 {
   "name": "Familien-Ernährungsmanager",
   "short_name": "Familienplan",
-  "description": "Familien-Speiseplan, Einkaufsliste und Budget",
+  "description": "Familien-Speiseplan, Einkaufsliste, Familienprofile und Budget",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

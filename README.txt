@@ -1,22 +1,17 @@
-# Familien-Ernährungsmanager – Web-App Starter
+FAMILIEN-ERNÄHRUNGSMANAGER – UPDATE 0.5
 
-## Was ist enthalten?
-- `index.html`: responsive App-Oberfläche mit Speiseplan, Einkaufsliste, Budget und Assistent-Demo
-- `manifest.webmanifest`: Metadaten für die Installation als Web-App
-- `service-worker.js`: Offline-Grundfunktion für Hosting über HTTPS
+Dateien im Paket:
+- index.html: Startseite mit Familienprofilen; die mobile Navigation klappt jetzt um, statt Profile außerhalb des sichtbaren Bereichs zu verstecken.
+- manifest.webmanifest: Installationsdaten der Web-App.
+- service-worker.js: Offline-Cache mit neuer Versionsnummer, damit alte zwischengespeicherte Dateien ersetzt werden.
 
-## Wichtig
-- Diese Version benötigt noch kein Konto und keine kostenpflichtigen Dienste.
-- Daten werden nur lokal im jeweiligen Browser gespeichert (`localStorage`).
-- Es gibt noch keine Synchronisierung zwischen iPhone und Computer.
-- Der Assistent ist noch keine echte KI-Anbindung.
-- Keine echten medizinischen Entscheidungen aus der App ableiten; besonders keine Änderungen an Insulin oder Medikamenten.
-- Die App ist noch nicht online veröffentlicht.
+Auf GitHub Pages:
+1. Im Repository direkt auf der obersten Ebene (root) alle drei Dateien hochladen.
+2. Bei index.html, manifest.webmanifest und service-worker.js jeweils die vorhandene Datei ersetzen/überschreiben.
+3. Änderungen committen.
+4. Die Website in Safari neu laden. Falls sie noch alt aussieht: in Safari einen privaten Tab öffnen und dieselbe Website-Adresse aufrufen.
 
-## Kostenlos veröffentlichen (späterer Schritt)
-Die Dateien müssen in das Stammverzeichnis eines kostenlosen statischen Hostings hochgeladen werden. Zum Beispiel kann GitHub Pages für ein öffentliches Repository kostenlos sein. Dabei gilt: Wer ein öffentliches Repository verwendet, sollte keine persönlichen Gesundheitsdaten oder Zugangsdaten in den Quellcode schreiben.
-
-Nach der Veröffentlichung über HTTPS kann die Seite in Safari geöffnet werden. Unter iOS kann sie über **Teilen → Zum Home-Bildschirm** auf dem Home-Bildschirm abgelegt werden.
-
-## Testen
-Öffne `index.html` lokal in einem Browser. Manche Vorschauen (auch Datei-Vorschauen in Apps) führen JavaScript nicht vollständig aus. Für die PWA-/Offline-Funktion ist ein HTTPS-Hosting nötig.
+WICHTIG:
+- Dieses Update ändert den Code der Website, nicht deine bereits lokal im Browser gespeicherten Einkaufslisten- und Budgetdaten. Bitte lösche keine Browserdaten.
+- Lokale Daten sind an den jeweiligen Browser/das jeweilige Gerät gebunden; keine Cloud-Synchronisierung.
+- Der Assistent ist weiterhin eine Demo ohne echte KI-Verbindung.
